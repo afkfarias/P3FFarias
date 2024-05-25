@@ -1,0 +1,50 @@
+<h1 appFontSize style="margin-bottom: 2rem;">Lista de alumnos</h1>
+  
+  <table mat-table [dataSource]="alumnos" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th appFontSize mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+  
+
+    <ng-container matColumnDef="firstName">
+      <th appFontSize mat-header-cell *matHeaderCellDef>Nombre y Apellido</th>
+      <td mat-cell *matCellDef="let element">{{ "-" | nameJoinLastName : element.firstName : element.lastName  }} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="email">
+      <th appFontSize mat-header-cell *matHeaderCellDef>Correo</th>
+      <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="gender">
+      <th appFontSize mat-header-cell *matHeaderCellDef>Género</th>
+      <td mat-cell *matCellDef="let element">{{ element.gender }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="createdAt">
+      <th appFontSize mat-header-cell *matHeaderCellDef>Fecha de alta</th>
+      <td mat-cell *matCellDef="let element">{{ element.createdAt | date }}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th appFontSize mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="openDialog(element)" mat-icon-button color="primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button (click)="onDeleteUser(element.id)" mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="d-flex mb-3">
+    <button (click)="openDialog()" mat-flat-button color="primary" style="margin-top: 1rem">
+      Crear alumno
+    </button>
+  </div>

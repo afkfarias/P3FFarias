@@ -1,0 +1,31 @@
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer
+      #drawer
+      class="example-sidenav"
+      [mode]="'side'"
+    >
+      <div class="example-menu" cdkMenu>
+        <button class="example-menu-item" cdkMenuItem routerLink="home">Inicio</button>
+        <button class="example-menu-item" cdkMenuItem routerLink="alumnos">Alumnos</button>
+        <button class="example-menu-item" cdkMenuItem routerLink="cursos">Cursos</button>
+        <button class="example-menu-item" cdkMenuItem routerLink="clases">Clases</button>
+      </div>
+    </mat-drawer>    
+    <div class="example-sidenav-content">
+      <mat-toolbar color="warn">
+        <button
+          (click)="drawer.toggle()"
+          mat-icon-button
+          class="example-icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Gestión académica</span>
+      </mat-toolbar>
+  
+      <main style="padding: 1rem">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </mat-drawer-container>
+

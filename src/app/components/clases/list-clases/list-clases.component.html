@@ -1,0 +1,50 @@
+<mat-spinner *ngIf="clases.length === 0"></mat-spinner>
+  <table *ngIf="clases.length > 0" mat-table [dataSource]="clases" class="mat-elevation-z8">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let element">{{ element.date ?? '-' }}  </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let element">
+        <button (click)="openDialog(element)" mat-icon-button color="primary">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button (click)="onDeleteClase(element.id)" mat-icon-button color="warn">
+            <mat-icon>delete</mat-icon>
+          </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <!-- <mat-list *ngIf="cursosSinTutor && cursosSinTutor.length > 0" role="list">
+    <span matListItemTitle>Lista de clases sin tutor asignado: </span>
+    @for (curso of cursosSinTutor; track curso) {
+    <mat-list-item role="listitem">{{curso.nombre}}</mat-list-item>
+    }
+  </mat-list> -->
+
+
+
+
