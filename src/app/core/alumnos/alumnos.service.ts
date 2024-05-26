@@ -1,71 +1,43 @@
 import { Injectable } from '@angular/core';
 import { IAlumno, ICreateAlumnoData } from '../../components/alumnos/models';
 import { Observable, delay, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
-let ALUMNOS_DB: IAlumno[] = [
-  {
-    id: 1,
-    firstName: 'Alexis',
-    lastName: 'Ferreira',
-    email: 'ffar@hotmail.com',
-    gender: 'M',
-    createdAt: new Date(),
-    deletedAt: null,
-  },
-  {
-    id: 2,
-    firstName: 'Malena',
-    lastName: 'Pérez',
-    email: 'mpe@gmail.com',
-    gender: 'F',
-    createdAt: new Date(),
-    deletedAt: null,
-  },
-  {
-    id: 3,
-    firstName: 'Agustin',
-    lastName: 'Juárez',
-    email: 'aj@gmail.com',
-    gender: 'M',
-    createdAt: new Date(),
-    deletedAt: null,
-  },
-];
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlumnosService {
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) { }
 
   getAlumnos(): Observable<IAlumno[]> {
-    return of(ALUMNOS_DB).pipe(delay(1500));
+    return this.httpClient.get<IAlumno[]>(environment.baseAPIURL + '/students')
+  }
+
+  getAlumnoById(id: string): Observable<IAlumno | undefined> {
+    return this.httpClient.get<IAlumno>(`${environment.baseAPIURL}/students/${id}`);
   }
 
   createAlumnos(data: ICreateAlumnoData) {
-    if (data.firstName && data.lastName && data.email && data.gender) {
-      const newAlumno: IAlumno = {
-        id: new Date().getTime(),
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        gender: data.gender,
-        createdAt: new Date(),
-        deletedAt: null
-      };
-      ALUMNOS_DB.push(newAlumno);
-    }
-    return of(ALUMNOS_DB);
+    return this.httpClient.post<IAlumno>(
+      `${environment.baseAPIURL}/students`,
+      data
+    );
   }
 
-  deleteAlumnos(id: number) {
-    return of(ALUMNOS_DB.filter((alumno) => alumno.id != id));
+  deleteAlumnos(id: string) {
+    return this.httpClient.delete<IAlumno>(
+      environment.baseAPIURL + '/students/' + id
+    );
   }
 
-  updateAlumnos(id: number, data: IAlumno) {
-    return of(
-      ALUMNOS_DB.map((alumno) => (alumno.id === id ? { ...alumno, ...data } : alumno))
+  updateAlumnos(id: string, data: IAlumno) {
+    return this.httpClient.put<IAlumno>(
+      environment.baseAPIURL + '/students/' + id,
+      data
     );
   }
 }

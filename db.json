@@ -1,0 +1,48 @@
+{
+  "users": [
+    {
+      "id": "4",
+      "firstName": "pruebaend",
+      "lastName": "pruebaend",
+      "email": "pruebaend@gmail.com",
+      "gender": "M",
+      "createdAt": "2024-05-25T22:33:17.898Z"
+    }
+  ],
+  "students": [
+    {
+      "firstName": "prueba",
+      "lastName": "prueba",
+      "email": "prueba@gmail.com",
+      "gender": "M",
+      "perfil": "Desarrollador",
+      "id": "b8b5"
+    },
+    {
+      "firstName": "newalum",
+      "lastName": "new",
+      "email": "new@mail.com",
+      "gender": "F",
+      "perfil": "IT",
+      "id": "5a1f"
+    }
+  ],
+  "courses": [
+    {
+      "nombre": "nuevprueb",
+      "cantHs": "34",
+      "cantClases": "24",
+      "tutor": "mengan",
+      "id": "f4f2"
+    },
+    {
+      "id": "5c18",
+      "nombre": "new",
+      "cantHs": "2",
+      "cantClases": "4",
+      "tutor": "new",
+      "createdAt": "2024-05-26T00:32:45.110Z"
+    }
+  ],
+  "registrations": []
+}

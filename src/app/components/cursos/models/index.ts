@@ -1,12 +1,15 @@
 export interface ICurso {
-  id: number;
+  id: string;
   nombre: string;
+  cantHs: number;
+  cantClases: number;
   tutor: string | null | undefined;   
 }
 
 
 export interface ICreateCursoData {
-  id: number;
   nombre: string;
+  cantHs: number;
+  cantClases: number;
   tutor: string | null | undefined;  
 }

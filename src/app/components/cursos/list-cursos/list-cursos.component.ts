@@ -13,16 +13,21 @@ import Swal from 'sweetalert2';
 export class ListCursosComponent {
   idNewAlumno = 4;
   cursos: ICurso[] = [];
+  loading = false;
 
   displayedColumns: string[] = [
     'id',
     'nombre',
-    'tutor'
+    'cantHs',
+    'cantClases',
+    'tutor',
+    'actions'
   ];
 
   constructor(private matDialog: MatDialog, private cursosService: CursosService) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.loadCursos();
   }
 
@@ -30,37 +35,42 @@ export class ListCursosComponent {
     this.cursosService.getCursos().subscribe({
       next: (cursos) => {
         this.cursos = cursos;
-      }
+      },
+      complete: () => {this.loading = false;}
     })
   }
 
-  openDialog(editAlumno?: ICurso): void {
+  openDialog(editCuso?: ICurso): void {
     this.matDialog
       .open(CursoDetailComponent, {
-        data: editAlumno,
+        data: editCuso,
       })
       .afterClosed()
       .subscribe({
         next: (result) => {
           if (result) {
-            if (editAlumno) {
-              console.log(editAlumno)
-              this.cursos = this.cursos.map((u) =>
-                u.id === editAlumno.id ? { ...u, ...result } : u
-              );
+            if (editCuso) {
+              console.log(editCuso)
+              this.cursosService.updateCurso(editCuso.id, result).subscribe( (curso) => {
+                this.cursosService.getCursos().subscribe( (cursos) => {
+                  this.cursos = cursos;
+                });
+              })
             } else {
               console.log(result)
-              result.id = this.idNewAlumno;
-              this.idNewAlumno++;
               result.createdAt = new Date();
-              this.cursos = [...this.cursos, result];
+              this.cursosService.createCurso(result).subscribe({
+                next: (cursoCreado) => {
+                  this.cursos = [...this.cursos, cursoCreado];
+                },
+              })
             }
           }
         },
       });
   }
 
-  onDeleteCurso(id: number): void {
+  onDeleteCurso(id: string): void {
     Swal.fire({
       title: "Esta seguro de eliminar el curso?",
       icon: "warning",
@@ -71,7 +81,9 @@ export class ListCursosComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.cursosService.deleteCurso(id).subscribe((cursos) => {
-          this.cursos = cursos,
+          this.cursosService.getCursos().subscribe( (cursos) => {
+            this.cursos = cursos
+          });
           Swal.fire({
           title: "Eliminado!",
           text: "El curso ha sido eliminado.",

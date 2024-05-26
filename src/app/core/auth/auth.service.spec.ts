@@ -24,7 +24,7 @@ describe('AuthService', () => {
     });
     authService.authUser$.subscribe({
       next: (authUser) => {
-        expect(authUser).toBeTruthy(); // no tiene que ser null, undefined o false
+        expect(authUser).toBeTruthy();
         expect(spyOnSetItem).toHaveBeenCalled();
         expect(spyOnNavigate).toHaveBeenCalled();
       },
@@ -37,6 +37,5 @@ describe('AuthService', () => {
       email: 'fake@mail.com',
       password: 'abcde123',
     });
-    // expect(spyOnAlert).toHaveBeenCalledWith('Correo o password incorrectos');
   });
 });

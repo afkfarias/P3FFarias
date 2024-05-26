@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrl: './list-alumnos.component.scss'
 })
 export class ListAlumnosComponent implements OnInit{
-  idNewAlumno = 4;
+  //idNewAlumno = 4;
   alumnos: IAlumno[] = [];
 
   displayedColumns: string[] = [
@@ -21,7 +21,7 @@ export class ListAlumnosComponent implements OnInit{
     'firstName',
     'email',
     'gender',
-    'createdAt',
+    'perfil',
     'actions',
   ];
 
@@ -50,22 +50,26 @@ export class ListAlumnosComponent implements OnInit{
           if (result) {
             if (editAlumno) {
               console.log(editAlumno)
-              this.alumnos = this.alumnos.map((u) =>
-                u.id === editAlumno.id ? { ...u, ...result } : u
-              );
+              this.alumnosService.updateAlumnos(editAlumno.id, result).subscribe( (alumno) => {
+                this.alumnosService.getAlumnos().subscribe( (alumnos) => {
+                  this.alumnos = alumnos;
+                });
+              })
             } else {
               console.log(result)
-              result.id = this.idNewAlumno;
-              this.idNewAlumno++;
               result.createdAt = new Date();
-              this.alumnos = [...this.alumnos, result];
+              this.alumnosService.createAlumnos(result).subscribe({
+                next: (alumnoCreado) => {
+                  this.alumnos = [...this.alumnos, alumnoCreado];
+                },
+              })
             }
           }
         },
       });
   }
 
-  onDeleteUser(id: number): void {
+  onDeleteUser(id: string): void {
     Swal.fire({
       title: "Esta seguro de eliminar el alumno?",
       icon: "warning",
@@ -75,8 +79,10 @@ export class ListAlumnosComponent implements OnInit{
       confirmButtonText: "Aceptar"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.alumnosService.deleteAlumnos(id).subscribe((alumnos) => {
-          this.alumnos = alumnos,
+        this.alumnosService.deleteAlumnos(id).subscribe((alumno) => {
+          this.alumnosService.getAlumnos().subscribe( (alumnos) => {
+            this.alumnos = alumnos
+          });
           Swal.fire({
           title: "Eliminado!",
           text: "El alumno ha sido eliminado.",

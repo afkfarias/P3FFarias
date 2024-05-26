@@ -16,9 +16,6 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatListModule} from '@angular/material/list';
 
-
-import { NavBarComponent } from './nav-bar/nav-bar.component';
-
 import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -28,7 +25,6 @@ import { FormFieldValidationPipe } from './pipes/form-field-validation.pipe';
 
 @NgModule({
   declarations: [
-    NavBarComponent,
     NameJoinLastNamePipe,
     FormFieldValidationPipe
   ],
@@ -66,7 +62,6 @@ import { FormFieldValidationPipe } from './pipes/form-field-validation.pipe';
     NameJoinLastNamePipe,
     FormFieldValidationPipe,
     ReactiveFormsModule,
-    NavBarComponent
   ]
 })
 export class SharedModule { }

@@ -39,6 +39,7 @@ export class AlumnoDetailComponent {
         ],
       ],
       gender: ['', [Validators.required]],
+      perfil: ['', [Validators.required]]
     });
 
     if (editAlumno) {
@@ -60,6 +61,10 @@ export class AlumnoDetailComponent {
 
   get genderControl() {
     return this.alumnoForm.get('gender');
+  }
+
+  get perfilControl() {
+    return this.alumnoForm.get('perfil');
   }
 
   save(): void {

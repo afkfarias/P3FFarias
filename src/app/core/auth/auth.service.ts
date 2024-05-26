@@ -9,8 +9,8 @@ export class AuthService {
     id: 1,
     createdAt: new Date(),
     email: 'email@mail.com',
-    firstName: 'goku',
-    lastName: 'son',
+    firstName: 'Usuario Prueba',
+    lastName: 'Farías',
     role: 'ADMIN',
   };
 
@@ -28,7 +28,7 @@ export class AuthService {
         'accessToken',
         'fdskfdsjkmngfunudsijfdsioufjsdoifdsyhfds'
       );
-      this.router.navigate(['dashboard', 'home']);
+      this.router.navigate(['nav', 'home']);
     }
   }
 
